@@ -11,13 +11,6 @@ public interface UserAccountDao {
 	
 	UserAccountPojo checkBalance(int bankAccountNumber) throws  SystemException; //Read
 	
-	UserAccountPojo withdraw(UserAccountPojo userAccountPojo) throws  SystemException; //Update
-
-	
-	
-	
-	
-	// List<UserAccountPojo> getAllUserAccounts();
-	
+	UserAccountPojo withdraw(UserAccountPojo userAccountPojo) throws  SystemException; //Update	
 
 }

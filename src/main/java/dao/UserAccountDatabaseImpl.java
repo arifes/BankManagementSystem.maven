@@ -18,7 +18,7 @@ public class UserAccountDatabaseImpl implements UserAccountDao {
 		String query = "INSERT INTO user_account(account_type, balance) VALUES ('"+userAccountPojo.getAccountType()+"', "+userAccountPojo.getBalance()+") returning bank_account_number";
 	    ResultSet resultSet = stmt.executeQuery(query);
 	    resultSet.next();
-	    userAccountPojo.setBankAccountNumber(resultSet.getInt(4));
+	    userAccountPojo.setBankAccountNumber(resultSet.getInt(1));
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new SystemException();
@@ -52,10 +52,7 @@ public class UserAccountDatabaseImpl implements UserAccountDao {
 		conn = DBUtil.establishConnection();
 		Statement stmt = conn.createStatement();
 		String query = "UPDATE user_account SET balance="+userAccountPojo.getBalance()+ "WHERE bank_account_number="+userAccountPojo.getBankAccountNumber();
-		int rowsAffected = stmt.executeUpdate(query);
-		//resultSet.next();
-		//userAccountPojo.setBalance(resultSet.getDouble(2)); 
-		 
+		int rowsAffected = stmt.executeUpdate(query); 		 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SystemException();
@@ -70,10 +67,7 @@ public class UserAccountDatabaseImpl implements UserAccountDao {
 		conn = DBUtil.establishConnection();
 		Statement stmt = conn.createStatement();
 		String query = "UPDATE user_account SET balance="+userAccountPojo.getBalance()+ "WHERE bank_account_number="+userAccountPojo.getBankAccountNumber();
-		int rowAffected = stmt.executeUpdate(query);
-	//	while (resultSet.next()) {
-	//		userAccountPojo.setBalance(resultSet.getDouble(2));
-		
+		int rowAffected = stmt.executeUpdate(query);		
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new SystemException();

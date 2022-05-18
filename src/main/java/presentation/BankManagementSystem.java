@@ -2,7 +2,6 @@ package presentation;
 
 import java.util.Scanner;
 
-import exceptions.AccountNotFoundException;
 import exceptions.SystemException;
 import model.UserAccountPojo;
 import model.UserInfoPojo;
@@ -26,12 +25,13 @@ public class BankManagementSystem {
 			System.out.println("1. New Account Registration");
 			System.out.println("2. Existing User Login  ");
 			System.out.println("3. Exit");
-			System.out.println("Please enter an option");
+			System.out.println("----------------------------------------------");
+			System.out.println("Please enter an option:");
 			int option = scan.nextInt();
 			switch (option) {
 			case 1:
 				UserInfoPojo newUserInfoPojo = new UserInfoPojo();
-				System.out.println("------------------------------------------");
+				System.out.println("----------------------------------------------");
 				System.out.println("Please enter your first name: ");
 				scan.nextLine();
 				newUserInfoPojo.setFirstName(scan.nextLine());
@@ -41,7 +41,7 @@ public class BankManagementSystem {
 				newUserInfoPojo.setUsername(scan.nextLine());
 				System.out.println("Please create a  password: ");
 				newUserInfoPojo.setPassword(scan.nextLine());
-				System.out.println("------------------------------------------");
+				System.out.println("----------------------------------------------");
 				UserInfoPojo userInfoPojo = null;
 				try {
 					userInfoPojo = userInfoService.addUserInfo(newUserInfoPojo);
@@ -51,7 +51,7 @@ public class BankManagementSystem {
 				}
 				System.out.println("** New user registered ** ");
 				System.out.println("User ID is " + userInfoPojo.getUserID());
-				System.out.println("-------------------------------------------------");
+				System.out.println("----------------------------------------------");
 				//System.out.println("Would you like to return to main menu? (yes/no)");
 				//cont = scan.nextLine();
 				break;
@@ -74,17 +74,17 @@ public class BankManagementSystem {
 				int userID = returnedUserInfoLoginPojo.getUserID();
 				String usernameOutput = returnedUserInfoLoginPojo.getFirstName();
 				if (userID == 0) {
-					System.out.println("----------------------------------------");
+					System.out.println("----------------------------------------------");
 					System.out.println("User account not found. Please try again");
-					System.out.println("----------------------------------------");
+					System.out.println("----------------------------------------------");
 					break;
 				}				
 				else {
 					int opt = 0;
 					while (opt != 5) {
-						System.out.println("--------------------------------------");
+						System.out.println("----------------------------------------------");
 						System.out.println("Welcome back " + usernameOutput + ", USERID: " + userID);
-						System.out.println("--------------------------------------");
+						System.out.println("----------------------------------------------");
 						System.out.println("1. Add new banking account");
 						System.out.println("2. Deposit");
 						System.out.println("3. Withdraw");
@@ -95,12 +95,10 @@ public class BankManagementSystem {
 						switch (opt) {
 						case 1:
 							UserAccountPojo newUserAccountPojo = new UserAccountPojo();
-							System.out.println("------------------------------------");
+							System.out.println("----------------------------------------------");
 							System.out.println("Please enter account type: (Checking/Saving)");
 							scan.nextLine();
 							newUserAccountPojo.setAccountType(scan.nextLine());
-							//System.out.println("Please enter amount to be deposited: ");
-							//newUserAccountPojo.setBalance(scan.nextDouble());
 							UserAccountPojo userAccountPojo = null;
 							try {
 								userAccountPojo = userAccountService.addAccount(newUserAccountPojo);
@@ -108,7 +106,7 @@ public class BankManagementSystem {
 								System.out.println(e.getMessage());
 								break;
 							}
-
+							System.out.println("----------------------------------------------");
 							System.out.println("New account opened");
 							System.out.println("The bank account Number is " + userAccountPojo.getBankAccountNumber());
 							break;
@@ -130,14 +128,14 @@ public class BankManagementSystem {
 								System.out.println("Bank Account UserID: " + depositUserAccountPojo.getUserID());
 								System.out.println("Bank Account Number: " + depositUserAccountPojo.getBankAccountNumber());
 								System.out.println("Bank Account Type: " + depositUserAccountPojo.getAccountType());
-								System.out.println("Account balance is $ " + depositUserAccountPojo.getBalance());
+								System.out.println("Account balance is $" + depositUserAccountPojo.getBalance());
 								System.out.println("---------------------------------");
 								System.out.println("Please enter deposit amount: ");
 								double amountToDeposit = scan.nextDouble();
 								double balance = depositUserAccountPojo.getBalance();
 								double newBalance = balance + amountToDeposit;
 								depositUserAccountPojo.setBalance(newBalance);
-								System.out.println(depositUserAccountPojo.getBalance());
+								System.out.println("New balance:" + depositUserAccountPojo.getBalance());
 								try {
 									userAccountService.addDeposit(depositUserAccountPojo);
 								} catch (SystemException e) {
@@ -164,7 +162,7 @@ public class BankManagementSystem {
 								System.out.println("Bank Account UserID: " + withdrawUserAccountPojo.getUserID());
 								System.out.println("Bank Account Number: " + withdrawUserAccountPojo.getBankAccountNumber());
 								System.out.println("Bank Account Type: " + withdrawUserAccountPojo.getAccountType());
-								System.out.println("Account balance is $ " + withdrawUserAccountPojo.getBalance());
+								System.out.println("Account balance is $" + withdrawUserAccountPojo.getBalance());
 								System.out.println("---------------------------------");
 								System.out.println("Please enter withdraw amount: ");
 								double amountToWithdraw = scan.nextDouble();
@@ -201,6 +199,7 @@ public class BankManagementSystem {
 								System.out.print("Error!");
 								System.out.print("Bank account number does not exist");
 							} else {
+								System.out.println("--------------------------------------");
 								System.out.println("Balance is " + balanceUserAccountPojo.getBalance());
 							}
 							break;

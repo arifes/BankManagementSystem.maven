@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,46 +21,19 @@ public class UserInfoDatabaseImpl implements UserInfoDao {
 					+userInfoPojo.getPassword()+") returning user_id ";
 			ResultSet resultSet = stmt.executeQuery(query);
 			resultSet.next();
-			userInfoPojo.setUserID(resultSet.getInt(1));			
+			userInfoPojo.setUserID(resultSet.getInt(1));
+			
+			
+		   String query1 = "INSERT INTO user_account(user_id) VALUES ('"+userInfoPojo.getUserID()+"') returning bank_account_number";
+		   ResultSet resultSet1 = stmt.executeQuery(query1);
+		   resultSet1.next();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SystemException();
 		}
 		return userInfoPojo;
-	}
-
-	@Override
-	public UserInfoPojo updateUserInfo(UserInfoPojo userInfoPojo) throws SystemException {
-		Connection conn = null;
-		try {
-			conn = DBUtil.establishConnection();
-			Statement stmt = conn.createStatement();
-			String query = "UPDATE user_info(username, password) VALUES ('"+userInfoPojo.getUsername()+"', "+userInfoPojo.getPassword()+") returning user_id ";
-		    ResultSet resultSet = stmt.executeQuery(query);
-		    resultSet.next();
-		    userInfoPojo.setUserID(resultSet.getInt(1));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SystemException();
-		}
-		return userInfoPojo;
-	}
-
-	@Override
-	public void deleteUserInfo(int userID) throws SystemException {
-		
-		Connection conn = null;
-		try {
-			conn = DBUtil.establishConnection();
-			Statement stmt = conn.createStatement();
-			String query = "DELETE FROM user_info WHERE user_id ="+userID;
-		    int rowsAffected = stmt.executeUpdate(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SystemException();
-		}		
-	}
+	}	
 
 	@Override
 	public UserInfoPojo validateUser(UserInfoPojo userInfoPojo) throws SystemException {
@@ -84,11 +56,6 @@ public class UserInfoDatabaseImpl implements UserInfoDao {
 	return userInfoPojo;
 	}
 
-	@Override
-	public void exitApplication() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }
